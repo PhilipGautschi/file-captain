@@ -45,16 +45,23 @@ pip install -e ".[dev]"
 ```python
 from file_utils import load_file, save_file
 
-# Load data from a file
-data = load_file("config.json")
-text = load_file("document.txt")
-
 # Save data to a file
-my_config = {"host": "localhost", "port": 8080}
-save_file("config.json", my_config)
+text_data = "Hello, world and some unicode characters! 🧠 字 Ω"
+save_file("text.txt", text_data)
+
+dict_data = {"host": "localhost", "port": 8080}
+save_file("dict.json", dict_data)
 
 # Save with overwrite protection disabled
-save_file("backup.json", my_config, overwrite_protection=False)
+dict_data_new = {"host": "localhost", "port": 8080, "user": "admin"}
+save_file("dict.json", dict_data_new, overwrite_protection=False)
+
+
+# Load data from a file
+loaded_text = load_file("text.txt")
+print(loaded_text)
+loaded_dict = load_file("dict.json")
+print(loaded_dict)
 ```
 
 ## API Reference
