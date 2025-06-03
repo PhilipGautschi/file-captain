@@ -9,6 +9,7 @@
 # ──────────────────────────────────────────────────────────────────────────────────────
 
 import tempfile
+import logging
 from unittest.mock import patch
 
 import pytest
@@ -16,6 +17,10 @@ import pytest
 from file_utils import load_file, save_file
 
 
+@pytest.fixture(autouse=True)
+def configure_logging(caplog):
+    caplog.set_level(logging.DEBUG)
+    
 # Utility function. ────────────────────────────────────────────────────────────────────
 @pytest.fixture
 def temp_json_path(tmp_path):
