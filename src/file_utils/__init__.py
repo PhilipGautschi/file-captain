@@ -11,7 +11,7 @@
 __version__ = "1.0.0"
 __author__ = "Philip Gautschi"
 
-from src.file_utils.core import save_file
-from src.file_utils.core import load_file
+from .core import save_file
+from .core import load_file
 
 __all__ = ["save_file", "load_file"]
