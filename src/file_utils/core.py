@@ -1,5 +1,4 @@
 # ──────────────────────────────────────────────────────────────────────────────────────
-#  File        : src/file_utils/file_utils.py
 #  Author      : Philip Gautschi
 #  Created     : 04 May 2025
 #  Updated     : 03 June 2025 - Version 1.0.0
