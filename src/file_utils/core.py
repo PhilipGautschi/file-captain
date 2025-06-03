@@ -3,7 +3,6 @@
 #  Created     : 04 May 2025
 #  Updated     : 03 June 2025 - Version 1.0.0
 #  Description : read and write dictionaries and strings to and from a file_utils system.
-#  Dependencies: only standard libraries
 #  License     : Copyright (c) 2025 Philip Gautschi. All rights reserved.
 # ──────────────────────────────────────────────────────────────────────────────────────
 
