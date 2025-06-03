@@ -13,7 +13,7 @@ from unittest.mock import patch
 
 import pytest
 
-from file-utils.src.file_utils.core import load_file, save_file
+from file_utils import load_file, save_file
 
 
 # Utility function. ────────────────────────────────────────────────────────────────────
