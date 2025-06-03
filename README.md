@@ -26,7 +26,7 @@ pip install git+https://github.com/philipgautschi/file-utils.git
 1. Clone the repository:
 ```bash
 git clone https://github.com/philipgautschi/file-utils.git
-cd file
+cd file-utils
 ```
 
 2. Create a virtual environment:
