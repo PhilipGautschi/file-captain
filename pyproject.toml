@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "file-utils"
+version = "1.0.0"
+description = "Utility function to read and write files"
+authors = [
+    {name = "Philip Gautschi", email = "mail@philipgautschi.ch"},
+]
+readme = "README.md"
+license = {text = "Proprietary"}
+requires-python = ">=3.12"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "isort",
+    "ruff",
+    "bandit",
+    "black",
+    "flake8",
+    "mypy",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/philipgautschi/file-utils"
+"Repository" = "https://github.com/philipgautschi/file-utils"
+"Issues" = "https://github.com/philipgautschi/file-utils/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
