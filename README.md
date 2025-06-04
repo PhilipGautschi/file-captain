@@ -120,11 +120,13 @@ pytest
 
 ## License
 
-Proprietary - Copyright (c) 2025 Philip Gautschi. All rights reserved.
+MIT License - Copyright (c) 2025 Philip Gautschi, Nicolas Brehm
+
+See [LICENSE](LICENSE) file for full license text.
 
 ## Contributing
 
-This is a private library for collaboration among friends and team members. Please coordinate with the maintainer before making changes.
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Support
 

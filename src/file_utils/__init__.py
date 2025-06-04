@@ -1,12 +1,16 @@
-# ──────────────────────────────────────────────────────────────────────────────────────
-#  File        : src/file_utils/__init__.py
-#  Author      : Philip Gautschi
-#  Created     : 03 June 2025
-#  Updated     : 03 June 2025 - Version 1.0.0
-#  Description : init file_utils for file_utils module
-#  Dependencies: only standard libraries
-#  License     : Copyright (c) 2025 Philip Gautschi. All rights reserved.
-# ──────────────────────────────────────────────────────────────────────────────────────
+"""File utilities package for loading and saving data with automatic format detection.
+
+This package provides a simple interface for file I/O operations with automatic
+format detection based on file extensions. Supports JSON and text files with
+built-in error handling and optional overwrite protection.
+
+Exports:
+    load_file: Load data from JSON or text files
+    save_file: Save data to files with format auto-detection
+
+Copyright (c) 2025 Philip Gautschi, Nicolas Brehm
+SPDX-License-Identifier: MIT
+"""
 
 __version__ = "1.0.0"
 __author__ = "Philip Gautschi"

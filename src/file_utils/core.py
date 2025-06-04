@@ -1,9 +1,17 @@
-#  Author      : Philip Gautschi
-#  Created     : 04 May 2025
-#  Updated     : 03 June 2025 - Version 1.0.0
-#  Description : read and write dictionaries and strings to and from a file_utils system.
-#  License     : Copyright (c) 2025 Philip Gautschi. All rights reserved.
-# ──────────────────────────────────────────────────────────────────────────────────────
+"""File utilities for loading and saving data with automatic format detection.
+
+This module provides simple functions to load and save data to files,
+automatically detecting JSON vs text format based on file extension.
+Supports both string and Path objects for file paths, with built-in
+error handling and optional overwrite protection.
+
+Functions:
+    load_file: Load data from a file (JSON or text) with automatic format detection
+    save_file: Save data to a file with optional overwrite protection
+
+Copyright (c) 2025 Philip Gautschi, Nicolas Brehm
+SPDX-License-Identifier: MIT
+"""
 
 import json
 import logging

@@ -1,12 +1,19 @@
-# ──────────────────────────────────────────────────────────────────────────────────────
-#  File        : tests/file_utils/test_core.py
-#  Author      : Philip Gautschi
-#  Created     : 04 May 2025
-#  Updated     : 25 May 2025 - Version 1.0.0
-#  Description : unit test for file_utils.py
-#  Dependencies: pytest
-#  License     : Copyright (c) 2025 Philip Gautschi. All rights reserved.
-# ──────────────────────────────────────────────────────────────────────────────────────
+"""Unit tests for the file_utils.core module.
+
+This test suite validates the functionality of load_file and save_file functions,
+including format detection, error handling, overwrite protection, and edge cases
+such as corrupted files and permission errors.
+
+Tests cover:
+    - JSON and text file operations
+    - Path handling (string and Path objects)
+    - Overwrite protection mechanism
+    - Error handling for corrupted files and OS errors
+    - Various file extensions and format detection
+
+Copyright (c) 2025 Philip Gautschi, Nicolas Brehm
+SPDX-License-Identifier: MIT
+"""
 
 import tempfile
 import logging
