@@ -48,7 +48,7 @@ def assert_log_contains(caplog, message, level):
         ({"Capitalized": "extension"}, ".jSoN"),
         ("No extension", ""),
         ("Unknown extension", ".unknown"),
-        , ".pickle"
+        , ".pickle"d
     ],
 )
 def test_write_and_read_various_suffix(tmp_path, data, extension, caplog):
