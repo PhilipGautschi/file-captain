@@ -10,6 +10,7 @@ import logging
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+import pickle
 
 from .JSONType import JSONType
 
@@ -57,33 +58,45 @@ def _write_text_to_file(path: Path, data: str) -> None:
 
     return None
 
+def _write_pickle_to_file(path: Path, data: object) -> None:
+    with open(path, "wb") as f:
+        pickle.dump(data, f)
+
+def _read_pickle_from_file(path: Path) -> object:
+    with open(path, "rb") as f:
+        return pickle.load(f)
 
 READERS: dict[str, Callable[[Path], JSONType | str | None]] = {
     ".json": _read_json_from_file,
     ".txt": _read_text_from_file,
+    ".pickle": _read_pickle_from_file,
+    ".pkl": _read_pickle_from_file,
 }
 
 WRITERS: dict[str, Callable[[Path, Any], None]] = {
     ".json": _write_json_to_file,
     ".txt": _write_text_to_file,
+    ".pickle": _write_pickle_to_file,
+    ".pkl": _write_pickle_to_file
 }
 
 
 def load_file(
     path_string: str | Path,
-) -> JSONType | str | None:
-    """Returns data from a JSON or plain text file_utils.
+) -> JSONType | str | object | None:
+    """Returns data from a JSON, plain text, or pickle file.
 
     Args:
-        path_string (str | Path): Path to the file_utils (absolute or relative).
+        path_string (str | Path): Path to the file (absolute or relative).
 
     Returns:
-        dict[str, Any]: Parsed data if the file_utils type is JSON
-        str:  Raw string content if the file_utils is a plain text.
+        dict[str, Any]: Parsed data if the file is JSON.
+        str: Raw string content if the file is a plain text.
+        object: Deserialized object if the file is pickle.
         None: If an error occurs during reading or parsing.
 
     Examples:
-        >>> my_data = load_file("path/to/file_utils.json")
+        >>> my_data = load_file("path/to/file.json")
     """
 
     path = Path(path_string)
@@ -93,7 +106,7 @@ def load_file(
     try:
         data = reader(path)
 
-    except OSError as err:
+    except (OSError, json.JSONDecodeError, pickle.PickleError) as err:
         logger.warning("No data loaded from %s: %s", path, err)
         return None
 
@@ -108,7 +121,7 @@ def save_file(
     data: JSONType | str,
     overwrite_protection: bool = True,
 ) -> bool:
-    """Writes data to a JSON or plain text file_utils.
+    """Writes data to a JSON, plain or pickle file.
 
     Args:
         data (JSONType | str): Data to be written (supports dict or str).

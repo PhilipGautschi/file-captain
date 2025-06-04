@@ -11,7 +11,6 @@
 import tempfile
 import logging
 from unittest.mock import patch
-from collections.abc import object
 import pytest
 
 from file_utils import load_file, save_file
@@ -38,6 +37,31 @@ def assert_log_contains(caplog, message, level):
         for record in caplog.records
     )
 
+class TestClass:
+    def __init__(self):
+        self.a = [1, 'a', '🧠']
+        self.b = 2
+        self.c = (1, 2, 3)
+
+@pytest.mark.parametrize("extension", [".pickle", ".pkl"])
+def test_pickle_custom_class(tmp_path, extension, caplog):
+    obj = TestClass()
+    testfile = tmp_path / f"test_custom_class{extension}"
+
+    caplog.clear()
+    assert save_file(testfile, obj)
+    assert_log_contains(caplog, "Data written to", "INFO")
+
+    caplog.clear()
+    loaded_obj = load_file(testfile)
+    assert_log_contains(caplog, "Data loaded from", "INFO")
+
+    # Compare attributes individually
+    assert isinstance(loaded_obj, TestClass)
+    assert loaded_obj.a == obj.a
+    assert loaded_obj.b == obj.b
+    assert loaded_obj.c == obj.c
+
 
 # Test various suffixes and defaults to plain text. ────────────────────────────────────
 @pytest.mark.parametrize(
@@ -48,7 +72,8 @@ def assert_log_contains(caplog, message, level):
         ({"Capitalized": "extension"}, ".jSoN"),
         ("No extension", ""),
         ("Unknown extension", ".unknown"),
-        , ".pickle"d
+        ({"key": "value", "num": 42}, ".pickle"),
+        ([1, 2, 3, {"nested": "dict"}], ".pkl"),
     ],
 )
 def test_write_and_read_various_suffix(tmp_path, data, extension, caplog):
