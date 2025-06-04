@@ -11,7 +11,7 @@
 import tempfile
 import logging
 from unittest.mock import patch
-
+from collections.abc import object
 import pytest
 
 from file_utils import load_file, save_file
@@ -48,6 +48,7 @@ def assert_log_contains(caplog, message, level):
         ({"Capitalized": "extension"}, ".jSoN"),
         ("No extension", ""),
         ("Unknown extension", ".unknown"),
+        Object(), ".pickle"
     ],
 )
 def test_write_and_read_various_suffix(tmp_path, data, extension, caplog):
