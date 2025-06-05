@@ -8,20 +8,21 @@
 #  License     : Copyright (c) 2025 Philip Gautschi. All rights reserved.
 # ──────────────────────────────────────────────────────────────────────────────────────
 
-import tempfile
 import logging
+import tempfile
+from dataclasses import dataclass
 from unittest.mock import patch
 
 import pytest
-
 from file_utils import load_file, save_file
 
 
+# Utility function. ────────────────────────────────────────────────────────────────────
 @pytest.fixture(autouse=True)
 def configure_logging(caplog):
     caplog.set_level(logging.DEBUG)
-    
-# Utility function. ────────────────────────────────────────────────────────────────────
+
+
 @pytest.fixture
 def temp_json_path(tmp_path):
     return tmp_path / "test.json"
@@ -39,6 +40,13 @@ def assert_log_contains(caplog, message, level):
     )
 
 
+@dataclass
+class SampleData:
+    a = "Text in unicode 🧠."
+    b = 2
+    c = (1, 2.12, 3)
+
+
 # Test various suffixes and defaults to plain text. ────────────────────────────────────
 @pytest.mark.parametrize(
     "data, extension",
@@ -48,6 +56,9 @@ def assert_log_contains(caplog, message, level):
         ({"Capitalized": "extension"}, ".jSoN"),
         ("No extension", ""),
         ("Unknown extension", ".unknown"),
+        ({"key": "value", "num": 42}, ".pickle"),
+        ([1, 2, 3, {"nested": "dict"}], ".pkl"),
+        (SampleData(), ".pkl"),
     ],
 )
 def test_write_and_read_various_suffix(tmp_path, data, extension, caplog):
@@ -96,6 +107,7 @@ def test_overwrite_protection(temp_text_path, caplog):
         (b'{"This": "JSON"\n"is": "corrupted"}', ".json"),
         (b"\xff\xfe\xfa", ".json"),
         (b"\xff\xfe\xfa", ".txt"),
+        (b"\xff\xfe\xfa", ".pkl"),
     ],
 )
 def test_load_corrupted(tmp_path, data, extension, caplog):
