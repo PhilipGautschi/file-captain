@@ -1,11 +1,11 @@
 """File utilities package for loading and saving data with automatic format detection.
 
 This package provides a simple interface for file I/O operations with automatic
-format detection based on file extensions. Supports JSON and text files with
+format detection based on file extensions. Supports JSON, pickle and text files with
 built-in error handling and optional overwrite protection.
 
 Exports:
-    load_file: Load data from JSON or text files
+    load_file: Load data from JSON, pickle or text files
     save_file: Save data to files with format auto-detection
 
 Copyright (c) 2025 Philip Gautschi, Nicolas Brehm

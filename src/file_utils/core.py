@@ -1,12 +1,12 @@
 """File utilities for loading and saving data with automatic format detection.
 
 This module provides simple functions to load and save data to files,
-automatically detecting JSON vs text format based on file extension.
+automatically detecting JSON vs pickle vs text format based on file extension.
 Supports both string and Path objects for file paths, with built-in
 error handling and optional overwrite protection.
 
 Functions:
-    load_file: Load data from a file (JSON or text) with automatic format detection
+    load_file: Load data from a file with automatic format detection
     save_file: Save data to a file with optional overwrite protection
 
 Copyright (c) 2025 Philip Gautschi, Nicolas Brehm

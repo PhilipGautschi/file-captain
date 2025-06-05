@@ -5,7 +5,7 @@ including format detection, error handling, overwrite protection, and edge cases
 such as corrupted files and permission errors.
 
 Tests cover:
-    - JSON and text file operations
+    - JSON, pickle and text file operations
     - Path handling (string and Path objects)
     - Overwrite protection mechanism
     - Error handling for corrupted files and OS errors
