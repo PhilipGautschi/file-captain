@@ -43,24 +43,11 @@ class TestClass:
         self.b = 2
         self.c = (1, 2, 3)
 
-@pytest.mark.parametrize("extension", [".pickle", ".pkl"])
-def test_pickle_custom_class(tmp_path, extension, caplog):
-    obj = TestClass()
-    testfile = tmp_path / f"test_custom_class{extension}"
-
-    caplog.clear()
-    assert save_file(testfile, obj)
-    assert_log_contains(caplog, "Data written to", "INFO")
-
-    caplog.clear()
-    loaded_obj = load_file(testfile)
-    assert_log_contains(caplog, "Data loaded from", "INFO")
-
-    # Compare attributes individually
-    assert isinstance(loaded_obj, TestClass)
-    assert loaded_obj.a == obj.a
-    assert loaded_obj.b == obj.b
-    assert loaded_obj.c == obj.c
+    def __eq__(self, other):
+        return (
+                isinstance(other, self.__class__) and
+                self.__dict__ == other.__dict__
+        )
 
 
 # Test various suffixes and defaults to plain text. ────────────────────────────────────
@@ -74,6 +61,7 @@ def test_pickle_custom_class(tmp_path, extension, caplog):
         ("Unknown extension", ".unknown"),
         ({"key": "value", "num": 42}, ".pickle"),
         ([1, 2, 3, {"nested": "dict"}], ".pkl"),
+        (TestClass(), ".pkl")
     ],
 )
 def test_write_and_read_various_suffix(tmp_path, data, extension, caplog):

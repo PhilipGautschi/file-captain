@@ -34,7 +34,6 @@ def _read_json_from_file(path: Path) -> JSONType | None:
 def _write_json_to_file(path: Path, data: JSONType) -> None:
     with path.open("w") as outfile:
         json.dump(data, outfile, indent=4)
-
     return None
 
 
@@ -55,16 +54,24 @@ def _read_text_from_file(path: Path) -> str | None:
 def _write_text_to_file(path: Path, data: str) -> None:
     with path.open("w", encoding="utf8") as outfile:
         outfile.write(data)
-
     return None
+
+
+def _read_pickle_from_file(path: Path) -> object:
+    with open(path, "rb") as f:
+        try:
+            data = pickle.load(f)
+        except pickle.PickleError as err:
+            logger.warning("Decoding error: %s", err)
+        else:
+            return data
+
 
 def _write_pickle_to_file(path: Path, data: object) -> None:
     with open(path, "wb") as f:
         pickle.dump(data, f)
+    return None
 
-def _read_pickle_from_file(path: Path) -> object:
-    with open(path, "rb") as f:
-        return pickle.load(f)
 
 READERS: dict[str, Callable[[Path], JSONType | str | None]] = {
     ".json": _read_json_from_file,
@@ -106,10 +113,9 @@ def load_file(
     try:
         data = reader(path)
 
-    except (OSError, json.JSONDecodeError, pickle.PickleError) as err:
+    except OSError as err:
         logger.warning("No data loaded from %s: %s", path, err)
         return None
-
     else:
         if data is not None:
             logger.info("Data loaded from %s.", path)
