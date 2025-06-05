@@ -15,11 +15,12 @@ SPDX-License-Identifier: MIT
 
 import json
 import logging
+import pickle
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
-from .JSONType import JSONType
+type JSONType = None | bool | int | float | str | list[JSONType] | dict[str, JSONType]
 
 logger = logging.getLogger(__name__)
 
@@ -66,32 +67,58 @@ def _write_text_to_file(path: Path, data: str) -> None:
     return None
 
 
-READERS: dict[str, Callable[[Path], JSONType | str | None]] = {
+def _read_pickle_from_file(path: Path) -> Any | None:
+    with path.open("rb") as infile:
+        try:
+            data = pickle.load(infile)
+
+        except pickle.UnpicklingError as err:
+            logger.warning("Decoding error: %s", err)
+            return None
+
+        else:
+            logger.debug("Pickle decoding successful.")
+            return data
+
+
+def _write_pickle_to_file(path: Path, data: Any) -> None:
+    with path.open("wb") as outfile:
+        pickle.dump(data, outfile)  # type: ignore[arg-type]
+
+    return None
+
+
+READERS: dict[str, Callable[[Path], JSONType | str | Any | None]] = {
     ".json": _read_json_from_file,
     ".txt": _read_text_from_file,
+    ".pickle": _read_pickle_from_file,
+    ".pkl": _read_pickle_from_file,
 }
 
 WRITERS: dict[str, Callable[[Path, Any], None]] = {
     ".json": _write_json_to_file,
     ".txt": _write_text_to_file,
+    ".pickle": _write_pickle_to_file,
+    ".pkl": _write_pickle_to_file,
 }
 
 
 def load_file(
     path_string: str | Path,
-) -> JSONType | str | None:
-    """Returns data from a JSON or plain text file_utils.
+) -> JSONType | str | Any | None:
+    """Returns data from a JSON, plain text, or pickle file.
 
     Args:
-        path_string (str | Path): Path to the file_utils (absolute or relative).
+        path_string (str | Path): Path to the file (absolute or relative).
 
     Returns:
-        dict[str, Any]: Parsed data if the file_utils type is JSON
-        str:  Raw string content if the file_utils is a plain text.
-        None: If an error occurs during reading or parsing.
+        JSONType: JSON data (dict, list, str, int, float, bool, or None) for .json files.
+        str: Raw string content for .txt files and unknown file extensions.
+        Any: Deserialized Python object for .pickle/.pkl files (could be any type).
+        None: If an error occurs during reading, parsing, or if the file doesn't exist.
 
     Examples:
-        >>> my_data = load_file("path/to/file_utils.json")
+        >>> config = load_file("path/to/config.json")
     """
 
     path = Path(path_string)
@@ -108,24 +135,25 @@ def load_file(
     else:
         if data is not None:
             logger.info("Data loaded from %s.", path)
+
         return data
 
 
 def save_file(
     path_string: str | Path,
-    data: JSONType | str,
+    data: JSONType | str | Any,
     overwrite_protection: bool = True,
 ) -> bool:
-    """Writes data to a JSON or plain text file_utils.
+    """Writes data to a JSON, plain text, or a pickle file.
 
     Args:
-        data (JSONType | str): Data to be written (supports dict or str).
-        path_string (str | Path): Path to the file_utils (absolute or relative).
+        path_string (str | Path): Path to the file (absolute or relative).
+        data (JSONType | str | Any): Data to be written.
         overwrite_protection (bool, optional): If True, prevents overwriting existing
             files; defaults to True.
 
     Returns:
-        bool: True if writing was successful, False if the file_utils could not be written.
+        bool: True if writing was successful, False if the file could not be written.
 
     Examples:
         >>> my_data = {"Host": "localhost", "Port": 3306, "Database": "mydb"}

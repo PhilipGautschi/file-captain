@@ -1,13 +1,13 @@
 # file-utils
 
-A lightweight Python utility library for reading and writing files with support for JSON and text formats.
+A lightweight Python utility library for reading and writing files with support for JSON, pickle and text formats.
 
 ## Features
 
 - Simple API for file operations
 - Automatic format detection based on file extensions
 - Built-in error handling and logging
-- Support for JSON and plain text files
+- Support for JSON, pickle and plain text files
 - Overwrite protection for safe file operations
 - Type hints for better development experience
 
@@ -40,6 +40,29 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
 ```
 
+## ⚠️ Security Considerations
+
+### Pickle Files - Security Warning
+
+**CRITICAL**: Loading pickle files from untrusted sources is a **serious security risk**.
+
+```python
+# 🚨 DANGEROUS - Never do this with untrusted files
+data = load_file("untrusted_file.pickle") # Could execute malicious code!
+# ✅ SAFE - Only load pickle files you created or from trusted sources
+data = load_file("my_own_data.pickle") # Safe if you created this file
+```
+**Why pickle is dangerous:**
+- Pickle can execute arbitrary Python code during deserialization
+- Malicious pickle files can compromise your system
+- There's no way to safely validate pickle content without loading it
+
+**Recommendations:**
+- **Never load pickle files from untrusted sources** (internet, email, external systems)
+- **Use JSON format** for data exchange when possible
+- **Validate file sources** - only load pickles you created or from verified trusted sources
+- **Consider alternatives** like JSON, YAML, or protocol buffers for data sharing
+
 ## Quick Start
 
 ```python
@@ -48,6 +71,9 @@ from file_utils import load_file, save_file
 # Save data to a file
 text_data = "Hello, world and some unicode characters! 🧠 字 Ω"
 save_file("text.txt", text_data)
+
+serializable_object = {"key1": "text-key", 2: "number-key"}
+save_file("object.pickle", serializable_object)
 
 dict_data = {"host": "localhost", "port": 8080}
 save_file("dict.json", dict_data)
@@ -62,29 +88,32 @@ loaded_text = load_file("text.txt")
 print(loaded_text)
 loaded_dict = load_file("dict.json")
 print(loaded_dict)
+object = load_file("object.pickle")
+print(object)
 ```
 
 ## API Reference
 
 ### `load_file(path_string)`
 
-Loads data from a JSON or text file.
+Returns data from a JSON, plain text, or pickle file.
 
 **Parameters:**
 - `path_string` (str | Path): Path to the file (absolute or relative)
 
 **Returns:**
-- `dict`: Parsed JSON data for .json files
+- `JSONType`: Parsed JSON data for .json files
+- `Any`: Deserialized object for .pickle or .pkl files 
 - `str`: Raw text content for other file types
 - `None`: If an error occurs during reading
 
 ### `save_file(path_string, data, overwrite_protection=True)`
 
-Saves data to a JSON or text file.
+Writes data to a JSON, plain text, or a pickle file.
 
 **Parameters:**
 - `path_string` (str | Path): Path to the file (absolute or relative)
-- `data` (dict | str): Data to be written
+- `data` (JSONType | str | Any): Data to be written
 - `overwrite_protection` (bool): Prevents overwriting existing files (default: True)
 
 **Returns:**
@@ -93,6 +122,7 @@ Saves data to a JSON or text file.
 ## Supported File Types
 
 - **JSON files** (.json): Automatically parsed and formatted with 4-space indentation
+- **Pickle files** (.pickle or .pkl): Can handle all serializable objects.
 - **Text files** (.txt and others): Handled as plain text with UTF-8 encoding
 
 ## Requirements
@@ -115,7 +145,7 @@ The following packages are available for development:
 
 Run tests:
 ```bash
-pytest
+pytest --cov
 ```
 
 ## License
