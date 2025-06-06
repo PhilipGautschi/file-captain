@@ -7,7 +7,7 @@ Thank you for considering contributing to file-utils! We welcome contributions f
 1. Fork the repository
 2. Clone your fork:
 ```bash
-git clone https://github.com/YOUR_USERNAME/file-utils.git
+git clone https://github.com/philipgautschi/file-utils.git
 cd file-utils
 ```
 3. Create a virtual environment:
