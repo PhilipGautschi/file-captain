@@ -8,9 +8,10 @@ version = "1.0.0"
 description = "Utility function to read and write files"
 authors = [
     {name = "Philip Gautschi", email = "mail@philipgautschi.ch"},
+    {name = "Nicolas Brehm", email = "nicolas@brehms.ch"},
 ]
 readme = "README.md"
-license = {text = "Proprietary"}
+license = {text = "MIT"}
 requires-python = ">=3.12"
 dependencies = []
 
