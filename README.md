@@ -143,9 +143,26 @@ The following packages are available for development:
 - bandit (security)
 - flake8 (style guide)
 
+Before a pull request make sure the following tests are succesfull.
+
 Run tests:
 ```bash
 pytest --cov
+```
+
+Run isort:
+```bash
+isort .
+```
+
+Run black:
+```bash
+black .
+```
+
+Run mypy:
+```bash
+mypy .
 ```
 
 ## License

@@ -15,7 +15,6 @@ SPDX-License-Identifier: MIT
 __version__ = "1.0.0"
 __author__ = "Philip Gautschi, Nicolas Brehm"
 
-from .core import save_file
-from .core import load_file
+from .core import load_file, save_file
 
 __all__ = ["save_file", "load_file"]
