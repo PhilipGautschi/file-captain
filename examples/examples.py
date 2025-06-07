@@ -1,7 +1,7 @@
-""" "Usage examples for the file-utils package.
+""" Usage examples for the file-utils package.
 
 Demonstrates saving and loading data with automatic format detection
-for text, JSON, and pickle files, including overwrite protection.
+including overwrite protection.
 
 Copyright (c) 2025 Philip Gautschi
 SPDX-License-Identifier: MIT
