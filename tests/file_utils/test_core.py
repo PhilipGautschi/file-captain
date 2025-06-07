@@ -9,7 +9,6 @@ Tests cover:
     - Path handling (string and Path objects)
     - Overwrite protection mechanism
     - Error handling for corrupted files and OS errors
-    - Various file extensions and format detection
 
 Copyright (c) 2025 Philip Gautschi, Nicolas Brehm
 SPDX-License-Identifier: MIT

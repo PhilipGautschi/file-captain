@@ -1,9 +1,9 @@
 """File utilities for loading and saving data with automatic format detection.
 
-This module provides simple functions to load and save data to files,
-automatically detecting JSON vs pickle vs text format based on file extension.
-Supports both string and Path objects for file paths, with built-in
-error handling and optional overwrite protection.
+This module provides simple functions to load and save data to files and
+automatically detects file format based on path extension. Supports both
+string and Path objects for file paths, with built-in error handling and
+optional overwrite protection.
 
 Functions:
     load_file: Load data from a file with automatic format detection
@@ -88,14 +88,14 @@ def _write_pickle_to_file(path: Path, data: Any) -> None:
     return None
 
 
-READERS: dict[str, Callable[[Path], JSONType | str | Any | None]] = {
+_READERS: dict[str, Callable[[Path], JSONType | str | Any | None]] = {
     ".json": _read_json_from_file,
     ".txt": _read_text_from_file,
     ".pickle": _read_pickle_from_file,
     ".pkl": _read_pickle_from_file,
 }
 
-WRITERS: dict[str, Callable[[Path, Any], None]] = {
+_WRITERS: dict[str, Callable[[Path, Any], None]] = {
     ".json": _write_json_to_file,
     ".txt": _write_text_to_file,
     ".pickle": _write_pickle_to_file,
@@ -106,15 +106,15 @@ WRITERS: dict[str, Callable[[Path, Any], None]] = {
 def load_file(
     path_string: str | Path,
 ) -> JSONType | str | Any | None:
-    """Returns data from a JSON, plain text, or pickle file.
+    """Returns data from the file system based on file extension.
 
     Args:
         path_string (str | Path): Path to the file (absolute or relative).
 
     Returns:
         JSONType: JSON data (dict, list, str, int, float, bool, or None) for .json files.
+        Any: Deserialized Python object for .pickle/.pkl files.
         str: Raw string content for .txt files and unknown file extensions.
-        Any: Deserialized Python object for .pickle/.pkl files (could be any type).
         None: If an error occurs during reading, parsing, or if the file doesn't exist.
 
     Examples:
@@ -123,7 +123,7 @@ def load_file(
 
     path = Path(path_string)
     suffix = path.suffix.lower()
-    reader = READERS.get(suffix, _read_text_from_file)
+    reader = _READERS.get(suffix, _read_text_from_file)
 
     try:
         data = reader(path)
@@ -144,7 +144,7 @@ def save_file(
     data: JSONType | str | Any,
     overwrite_protection: bool = True,
 ) -> bool:
-    """Writes data to a JSON, plain text, or a pickle file.
+    """Writes data to the file system. Autodetects format based on file extension.
 
     Args:
         path_string (str | Path): Path to the file (absolute or relative).
@@ -162,7 +162,7 @@ def save_file(
 
     path = Path(path_string)
     suffix = path.suffix.lower()
-    writer = WRITERS.get(suffix, _write_text_to_file)
+    writer = _WRITERS.get(suffix, _write_text_to_file)
 
     try:
         if overwrite_protection and path.exists():
