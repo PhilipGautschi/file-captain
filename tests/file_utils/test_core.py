@@ -24,6 +24,17 @@ import pytest
 from file_utils import load_file, save_file
 
 
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+
+
+
 # Utility function. ────────────────────────────────────────────────────────────────────
 @pytest.fixture(autouse=True)
 def configure_logging(caplog):
@@ -66,11 +77,13 @@ class SampleData:
         ({"key": "value", "num": 42}, ".pickle"),
         ([1, 2, 3, {"nested": "dict"}], ".pkl"),
         (SampleData(), ".pkl"),
+        ({"key": "value", "num": 42,"🧠": '🧠'}, ".toml"),
+        ({"key": "value", "num": 42}, ".yaml"),
+        ({"key": "value", "num": 42}, ".yml"),
     ],
 )
 def test_write_and_read_various_suffix(tmp_path, data, extension, caplog):
     testfile = tmp_path / f"file_utils{extension}"
-
     caplog.clear()
     assert save_file(testfile, data)
     assert_log_contains(caplog, "Data written to", "INFO")
@@ -115,6 +128,10 @@ def test_overwrite_protection(temp_text_path, caplog):
         (b"\xff\xfe\xfa", ".json"),
         (b"\xff\xfe\xfa", ".txt"),
         (b"\xff\xfe\xfa", ".pkl"),
+        (b"\xff\xfe\xfa", ".yaml"),
+        (b"\xff\xfe\xfa", ".yml"),
+        (b"\xff\xfe\xfa", ".toml"),
+        (b"\xff\xfe\xfa", ".pickle"),
     ],
 )
 def test_load_corrupted(tmp_path, data, extension, caplog):
