@@ -15,6 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Security
 
+## [1.0.1] - 2025-01-14
+
+### Fixed
+- Corrected authorship for PyPi
 
 ## [1.0.0] - 2025-01-14
 ### Added

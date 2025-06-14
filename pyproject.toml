@@ -8,7 +8,10 @@ dynamic = ["version"]
 description = "Utility function to read and write files"
 authors = [
     {name = "Philip Gautschi", email = "philips.python.projects@gmail.com"},
-    {name = "Nicolas Brehm"},
+    {name = "Nicolas Brehm", email = "philips.python.projects@gmail.com"},
+]
+maintainers = [
+    {name = "Philip Gautschi", email = "philips.python.projects@gmail.com"},
 ]
 readme = "README.md"
 license = {text = "MIT"}
