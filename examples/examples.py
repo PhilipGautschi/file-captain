@@ -1,4 +1,4 @@
-"""Usage examples for the file-utils package.
+"""Usage examples for the file-captain package.
 
 Demonstrates saving and loading data with automatic format detection
 including overwrite protection.
@@ -7,7 +7,7 @@ Copyright (c) 2025 Philip Gautschi, Nicolas Brehm
 SPDX-License-Identifier: MIT
 """
 
-from file_utils import load_file, save_file
+from file_captain import load_file, save_file
 
 # Save data to a file
 dict_data = {"host": "localhost", "port": 8080}

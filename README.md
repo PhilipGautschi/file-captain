@@ -1,4 +1,4 @@
-# file-utils
+# file-captain
 
 A lightweight Python utility library for reading and writing files with support for JSON, pickle and text formats.
 
@@ -18,15 +18,15 @@ A lightweight Python utility library for reading and writing files with support 
 Install directly from the repository:
 
 ```bash
-pip install git+https://github.com/philipgautschi/file-utils.git
+pip install git+https://github.com/philipgautschi/file-captain.git
 ```
 
 ### For Development
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/philipgautschi/file-utils.git
-cd file-utils
+git clone https://github.com/philipgautschi/file-captain.git
+cd file-captain
 ```
 
 2. Create a virtual environment:
@@ -65,7 +65,7 @@ data = load_file("my_own_data.pickle") # Safe if you created this file
 ## Quick Start
 
 ```python
-from file_utils import load_file, save_file
+from file_captain import load_file, save_file
 
 # Save data to a file
 dict_data = {"host": "localhost", "port": 8080}
@@ -86,7 +86,6 @@ save_file("dict.yaml", dict_data)
 # Save with overwrite protection disabled
 dict_data_new = {"host": "localhost", "port": 8080, "user": "admin"}
 save_file("dict.yaml", dict_data_new, overwrite_protection=False)
-
 
 # Load data from a file
 loaded_dict = load_file("dict.json")
