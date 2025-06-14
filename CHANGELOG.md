@@ -4,11 +4,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Added
-- `load_file()` function for reading JSON, pickle, and text files
-- `save_file()` function for writing files with overwrite protection
-- Automatic format detection based on file extensions
-- Comprehensive error handling and logging
-- Type hints support
 
 ### Changed
 
@@ -19,3 +14,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Fixed
 
 ### Security
+
+
+## [1.0.0] - 2025-01-14
+### Added
+- `load_file()` function for reading files
+- `save_file()` function for writing files
+- Support for JSON files (.json)
+- Support for pickle files (.pickle, .pkl)
+- Support for TOML files (.json) 
+- Support for text files (.txt and others)
+- Support for YAML files (.yaml, .yml)
+- Automatic format detection based on file path extension 
+- Overwrite protection feature to prevent accidental file overwrites
+- Error handling and logging for file operations
+- Type hints support with `py.typed` marker
+- Automatic directory creation for nested file paths
+- Cross-platform path handling using `pathlib.Path`
+- Test suite with pytest
+- Documentation with usage examples
+
+### Security
+- Added explicit security warnings about pickle file usage in documentation

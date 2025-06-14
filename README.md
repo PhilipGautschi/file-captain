@@ -6,8 +6,8 @@ A lightweight Python utility library for reading and writing files with support 
 
 - Simple API for file operations
 - Automatic format detection based on file extensions
+- Support for JSON, pickle, plain text, TOML and YAML files
 - Built-in error handling and logging
-- Support for JSON, pickle and plain text files
 - Overwrite protection for safe file operations
 - Type hints for better development experience
 
@@ -61,7 +61,6 @@ data = load_file("my_own_data.pickle") # Safe if you created this file
 - **Never load pickle files from untrusted sources** (internet, email, external systems)
 - **Use JSON format** for data exchange when possible
 - **Validate file sources** - only load pickles you created or from verified trusted sources
-- **Consider alternatives** like JSON, YAML, or protocol buffers for data sharing
 
 ## Quick Start
 
@@ -69,66 +68,81 @@ data = load_file("my_own_data.pickle") # Safe if you created this file
 from file_utils import load_file, save_file
 
 # Save data to a file
-text_data = "Hello, world and some unicode characters! 🧠 字 Ω"
-save_file("text.txt", text_data)
+dict_data = {"host": "localhost", "port": 8080}
+save_file("dict.json", dict_data)
 
 serializable_object = {"key1": "text-key", 2: "number-key"}
 save_file("object.pickle", serializable_object)
 
 dict_data = {"host": "localhost", "port": 8080}
-save_file("dict.json", dict_data)
+save_file("dict.toml", dict_data)
+
+text_data = "Hello, world and some unicode characters! 🧠 字 Ω"
+save_file("text.txt", text_data)
+
+dict_data = {"host": "localhost", "port": 8080}
+save_file("dict.yaml", dict_data)
 
 # Save with overwrite protection disabled
 dict_data_new = {"host": "localhost", "port": 8080, "user": "admin"}
-save_file("dict.json", dict_data_new, overwrite_protection=False)
+save_file("dict.yaml", dict_data_new, overwrite_protection=False)
 
 
 # Load data from a file
-loaded_text = load_file("text.txt")
-print(loaded_text)
 loaded_dict = load_file("dict.json")
 print(loaded_dict)
-object = load_file("object.pickle")
-print(object)
+loaded_object = load_file("object.pickle")
+print(loaded_object)
+loaded_dict = load_file("dict.toml")
+print(loaded_dict)
+loaded_text = load_file("text.txt")
+print(loaded_text)
+loaded_dict = load_file("dict.yaml")
+print(loaded_dict)
+
 ```
 
 ## API Reference
 
 ### `load_file(path_string)`
 
-Returns data from a JSON, plain text, or pickle file.
+Returns data from the file system. Autodetects format based on file extension.
 
 **Parameters:**
-- `path_string` (str | Path): Path to the file (absolute or relative)
+- path_string (str | Path): Path to the file (absolute or relative).
 
 **Returns:**
-- `JSONType`: Parsed JSON data for .json files
-- `Any`: Deserialized object for .pickle or .pkl files 
-- `str`: Raw text content for other file types
-- `None`: If an error occurs during reading
+- JSONType: parsed JSON data for .json files.
+- Any: Deserialized python object for .pickle/.pkl files.
+- TOMLType: Parsed TOML data for .toml files.
+- str: Raw string content for .txt files and unknown file extensions.
+- YAMLType: Parsed YAML data for .yaml/.yml files.
+- None: If an error occurs during reading, parsing.
 
 ### `save_file(path_string, data, overwrite_protection=True)`
 
-Writes data to a JSON, plain text, or a pickle file.
+Writes data to the file system. Autodetects format based on file extension.
 
 **Parameters:**
-- `path_string` (str | Path): Path to the file (absolute or relative)
-- `data` (JSONType | str | Any): Data to be written
-- `overwrite_protection` (bool): Prevents overwriting existing files (default: True)
+- path_string (str | Path): Path to the file (absolute or relative).
+- data (Any): Data to be written.
+- overwrite_protection (bool, optional): If True, prevents overwriting existing files; defaults to True.
 
 **Returns:**
-- `bool`: True if successful, False otherwise
+- bool: True if writing was successful, False, otherwise.
 
 ## Supported File Types
 
 - **JSON files** (.json): Automatically parsed and formatted with 4-space indentation
 - **Pickle files** (.pickle or .pkl): Can handle all serializable objects.
+- **TOML files** (.toml): Automatically parsed
 - **Text files** (.txt and others): Handled as plain text with UTF-8 encoding
+- **YAML files** (.yaml or .yml): Automatically parsed and formatted with 2-space indentation
 
 ## Requirements
 
-- Python 3.12 or higher
-- No external dependencies for core functionality
+- Python 3.11 or higher
+- External dependencies: tomli-w >=1.0.0 and pyyaml >= 6.0.0
 
 ## Development Dependencies
 
@@ -137,11 +151,8 @@ The following packages are available for development:
 - pytest (testing)
 - pytest-cov (coverage)
 - black (code formatting)
-- ruff (linting)
 - mypy (type checking)
 - isort (import sorting)
-- bandit (security)
-- flake8 (style guide)
 
 Before a pull request make sure the following tests are succesfull.
 

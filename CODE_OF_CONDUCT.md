@@ -18,7 +18,7 @@ We want this project to be a welcoming place for everyone. Please:
 
 ## Enforcement
 
-If you experience or witness unacceptable behavior, please contact the maintainers at [mail@philipgautschi.ch](mailto:mail@philipgautschi.ch).
+If you experience or witness unacceptable behavior, please contact the maintainers at [philips.python.projects@gmail.com](mailto:philips.python.projects@gmail.com).
 
 We reserve the right to remove comments, ban users, or take other actions to maintain a respectful community.
 
