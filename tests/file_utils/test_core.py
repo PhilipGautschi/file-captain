@@ -5,7 +5,7 @@ including format detection, error handling, overwrite protection, and edge cases
 such as corrupted files and permission errors.
 
 Tests cover:
-    - JSON, pickle and text file operations
+    - JSON, pickle, TOML, text and YAML file operations
     - Path handling (string and Path objects)
     - Overwrite protection mechanism
     - Error handling for corrupted files and OS errors
@@ -66,11 +66,13 @@ class SampleData:
         ({"key": "value", "num": 42}, ".pickle"),
         ([1, 2, 3, {"nested": "dict"}], ".pkl"),
         (SampleData(), ".pkl"),
+        ({"key": "value", "num": 42, "🧠": "🧠"}, ".toml"),
+        ({"key": "value", "num": 42}, ".yaml"),
+        ({"key": "value", "num": 42}, ".yml"),
     ],
 )
 def test_write_and_read_various_suffix(tmp_path, data, extension, caplog):
     testfile = tmp_path / f"file_utils{extension}"
-
     caplog.clear()
     assert save_file(testfile, data)
     assert_log_contains(caplog, "Data written to", "INFO")
@@ -113,8 +115,10 @@ def test_overwrite_protection(temp_text_path, caplog):
     [
         (b'{"This": "JSON"\n"is": "corrupted"}', ".json"),
         (b"\xff\xfe\xfa", ".json"),
+        (b"\xff\xfe\xfa", ".pickle"),
+        (b"\xff\xfe\xfa", ".toml"),
         (b"\xff\xfe\xfa", ".txt"),
-        (b"\xff\xfe\xfa", ".pkl"),
+        (b"\xff\xfe\xfa", ".yaml"),
     ],
 )
 def test_load_corrupted(tmp_path, data, extension, caplog):
