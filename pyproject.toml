@@ -40,6 +40,7 @@ dev = [
     "isort",
     "black",
     "mypy",
+    "types-PyYAML",
 ]
 
 [project.urls]
