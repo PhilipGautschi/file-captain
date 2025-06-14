@@ -5,7 +5,7 @@ including format detection, error handling, overwrite protection, and edge cases
 such as corrupted files and permission errors.
 
 Tests cover:
-    - JSON, pickle and text file operations
+    - JSON, pickle, TOML, text and YAML file operations
     - Path handling (string and Path objects)
     - Overwrite protection mechanism
     - Error handling for corrupted files and OS errors
@@ -22,17 +22,6 @@ from unittest.mock import patch
 import pytest
 
 from file_utils import load_file, save_file
-
-
-import logging
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
-
-
 
 
 # Utility function. ────────────────────────────────────────────────────────────────────
@@ -77,7 +66,7 @@ class SampleData:
         ({"key": "value", "num": 42}, ".pickle"),
         ([1, 2, 3, {"nested": "dict"}], ".pkl"),
         (SampleData(), ".pkl"),
-        ({"key": "value", "num": 42,"🧠": '🧠'}, ".toml"),
+        ({"key": "value", "num": 42, "🧠": "🧠"}, ".toml"),
         ({"key": "value", "num": 42}, ".yaml"),
         ({"key": "value", "num": 42}, ".yml"),
     ],
@@ -126,12 +115,10 @@ def test_overwrite_protection(temp_text_path, caplog):
     [
         (b'{"This": "JSON"\n"is": "corrupted"}', ".json"),
         (b"\xff\xfe\xfa", ".json"),
-        (b"\xff\xfe\xfa", ".txt"),
-        (b"\xff\xfe\xfa", ".pkl"),
-        (b"\xff\xfe\xfa", ".yaml"),
-        (b"\xff\xfe\xfa", ".yml"),
-        (b"\xff\xfe\xfa", ".toml"),
         (b"\xff\xfe\xfa", ".pickle"),
+        (b"\xff\xfe\xfa", ".toml"),
+        (b"\xff\xfe\xfa", ".txt"),
+        (b"\xff\xfe\xfa", ".yaml"),
     ],
 )
 def test_load_corrupted(tmp_path, data, extension, caplog):

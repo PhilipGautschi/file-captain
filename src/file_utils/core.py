@@ -84,7 +84,7 @@ def _read_toml_from_file(path: Path) -> TOMLType | None:
         try:
             data = tomllib.load(infile)
 
-        except tomllib.TOMLDecodeError as err:
+        except (UnicodeDecodeError, tomllib.TOMLDecodeError) as err:
             logger.warning("Decoding error: %s", err)
             return None
 
