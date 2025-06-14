@@ -1,4 +1,4 @@
-"""Unit tests for the file_utils.core module.
+"""Unit tests for the file_captain.core module.
 
 This test suite validates the functionality of load_file and save_file functions,
 including format detection, error handling, overwrite protection, and edge cases
@@ -21,7 +21,7 @@ from unittest.mock import patch
 
 import pytest
 
-from file_utils import load_file, save_file
+from file_captain import load_file, save_file
 
 
 # Utility function. ────────────────────────────────────────────────────────────────────
@@ -72,7 +72,7 @@ class SampleData:
     ],
 )
 def test_write_and_read_various_suffix(tmp_path, data, extension, caplog):
-    testfile = tmp_path / f"file_utils{extension}"
+    testfile = tmp_path / f"file_captain{extension}"
     caplog.clear()
     assert save_file(testfile, data)
     assert_log_contains(caplog, "Data written to", "INFO")
@@ -109,7 +109,7 @@ def test_overwrite_protection(temp_text_path, caplog):
     assert load_file(temp_text_path) == data2
 
 
-# Test corrupted or wrong file_utils types. ──────────────────────────────────────────────────
+# Test corrupted or wrong file_captain types. ──────────────────────────────────────────────────
 @pytest.mark.parametrize(
     "data, extension",
     [
@@ -122,7 +122,7 @@ def test_overwrite_protection(temp_text_path, caplog):
     ],
 )
 def test_load_corrupted(tmp_path, data, extension, caplog):
-    testfile = tmp_path / f"file_utils{extension}"
+    testfile = tmp_path / f"file_captain{extension}"
     with testfile.open("wb") as outfile:
         outfile.write(data)
 
