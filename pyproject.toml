@@ -7,23 +7,38 @@ name = "file-utils"
 version = "1.0.0"
 description = "Utility function to read and write files"
 authors = [
-    {name = "Philip Gautschi", email = "mail@philipgautschi.ch"},
-    {name = "Nicolas Brehm", email = "nicolas@brehms.ch"},
+    {name = "Philip Gautschi", email = "philips.python.projects@gmail.com"},
+    {name = "Nicolas Brehm"},
 ]
 readme = "README.md"
 license = {text = "MIT"}
-requires-python = ">=3.12"
-dependencies = []
+requires-python = ">=3.11"
+dependencies = [
+    "tomli-w>=1.0.0",
+    "pyyaml>=6.0",
+]
+keywords = ["file", "io", "json", "yaml", "toml", "pickle", "text", "utilities"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Filesystems",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
 
 [project.optional-dependencies]
 dev = [
     "pytest",
     "pytest-cov",
     "isort",
-    "ruff",
-    "bandit",
     "black",
-    "flake8",
     "mypy",
 ]
 
