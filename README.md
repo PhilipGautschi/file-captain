@@ -18,7 +18,7 @@ A lightweight Python utility library for reading and writing files with support 
 Install directly from the repository:
 
 ```bash
-pip install git+https://github.com/philipgautschi/file-captain.git
+pip install file-captain
 ```
 
 ### For Development
