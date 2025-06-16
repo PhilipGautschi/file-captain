@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "Utility function to read and write files"
 authors = [
     {name = "Philip Gautschi", email = "philips.python.projects@gmail.com"},
-    {name = "Nicolas Brehm", email = "philips.python.projects@gmail.com"},
+    {name = "Nicolas Brehm", email = "philips.python.projects+friends@gmail.com"},
 ]
 maintainers = [
     {name = "Philip Gautschi", email = "philips.python.projects@gmail.com"},
