@@ -38,6 +38,7 @@ YAMLType = None | bool | int | float | str | date | time | datetime | list["YAML
 
 
 def _read_json_from_file(path: Path) -> JSONType | None:
+    """Read JSON data from a file and return it, or None on decode error."""
     with path.open("r") as infile:
         try:
             data: JSONType = json.load(infile)
@@ -52,6 +53,7 @@ def _read_json_from_file(path: Path) -> JSONType | None:
 
 
 def _write_json_to_file(path: Path, data: JSONType) -> None:
+    """Write JSON data to a file."""
     with path.open("w") as outfile:
         json.dump(data, outfile, indent=4)
 
@@ -59,6 +61,7 @@ def _write_json_to_file(path: Path, data: JSONType) -> None:
 
 
 def _read_pickle_from_file(path: Path) -> Any | None:
+    """Read and unpickle data from a file, or return None on decode error."""
     with path.open("rb") as infile:
         try:
             data = pickle.load(infile)
@@ -73,6 +76,7 @@ def _read_pickle_from_file(path: Path) -> Any | None:
 
 
 def _write_pickle_to_file(path: Path, data: Any) -> None:
+    """Write data to a file using pickle."""
     with path.open("wb") as outfile:
         pickle.dump(data, outfile)  # type: ignore[arg-type]
 
@@ -80,6 +84,7 @@ def _write_pickle_to_file(path: Path, data: Any) -> None:
 
 
 def _read_toml_from_file(path: Path) -> TOMLType | None:
+    """Read TOML data from a file and return it, or None on decode error."""
     with path.open("rb") as infile:
         try:
             data = tomllib.load(infile)
@@ -94,6 +99,7 @@ def _read_toml_from_file(path: Path) -> TOMLType | None:
 
 
 def _write_toml_to_file(path: Path, data: TOMLType) -> None:
+    """Write TOML data to a file."""
     with path.open("wb") as outfile:
         tomli_w.dump(data, outfile)
 
@@ -101,6 +107,7 @@ def _write_toml_to_file(path: Path, data: TOMLType) -> None:
 
 
 def _read_text_from_file(path: Path) -> str | None:
+    """Read text data from a file and return it, or None on decode error."""
     with path.open("r") as infile:
         try:
             data: str = infile.read()
@@ -115,6 +122,7 @@ def _read_text_from_file(path: Path) -> str | None:
 
 
 def _write_text_to_file(path: Path, data: str) -> None:
+    """Write text data to a file."""
     with path.open("w") as outfile:
         outfile.write(data)
 
@@ -122,6 +130,7 @@ def _write_text_to_file(path: Path, data: str) -> None:
 
 
 def _read_yaml_from_file(path: Path) -> YAMLType | None:
+    """Read YAML data from a file and return it, or None on decode error."""
     with path.open("r") as infile:
         try:
             data = yaml.safe_load(infile)
@@ -136,6 +145,7 @@ def _read_yaml_from_file(path: Path) -> YAMLType | None:
 
 
 def _write_yaml_to_file(path: Path, data: YAMLType) -> None:
+    """Write YAML data to a file."""
     with path.open("w") as outfile:
         yaml.dump(data, outfile, default_flow_style=False, indent=2)
 
