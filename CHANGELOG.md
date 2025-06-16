@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Removed
 
 ### Fixed
+- All textbased file operations are now forced to encoded in UTF-8
 
 ### Security
 
