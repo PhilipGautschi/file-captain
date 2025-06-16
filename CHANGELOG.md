@@ -4,26 +4,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased]
 ### Added
-- Docstrings for all functions
 
 ### Changed
-- Author field in pyproject.toml
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-- All textbased file operations are now forced to encoded in UTF-8
 
 ### Security
 
-## [1.0.1] - 2025-01-14
+## [1.0.2] - 2025-06-16
+
+### Added
+- Docstrings for all functions
+
+### Changed
+- Author field in pyproject.toml
+
+### Fixed
+- All textbased file operations are now forced to encoded in UTF-8
+
+## [1.0.1] - 2025-06-14
 
 ### Fixed
 - Corrected authorship for PyPi
 
-## [1.0.0] - 2025-01-14
+## [1.0.0] - 2025-06-14
 ### Added
 - `load_file()` function for reading files
 - `save_file()` function for writing files
