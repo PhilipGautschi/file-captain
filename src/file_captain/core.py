@@ -39,7 +39,7 @@ YAMLType = None | bool | int | float | str | date | time | datetime | list["YAML
 
 def _read_json_from_file(path: Path) -> JSONType | None:
     """Read JSON data from a file and return it, or None on decode error."""
-    with path.open("r") as infile:
+    with path.open("r", encoding="utf8") as infile:
         try:
             data: JSONType = json.load(infile)
 
@@ -54,7 +54,7 @@ def _read_json_from_file(path: Path) -> JSONType | None:
 
 def _write_json_to_file(path: Path, data: JSONType) -> None:
     """Write JSON data to a file."""
-    with path.open("w") as outfile:
+    with path.open("w", encoding="utf8") as outfile:
         json.dump(data, outfile, indent=4)
 
     return None
@@ -108,7 +108,7 @@ def _write_toml_to_file(path: Path, data: TOMLType) -> None:
 
 def _read_text_from_file(path: Path) -> str | None:
     """Read text data from a file and return it, or None on decode error."""
-    with path.open("r") as infile:
+    with path.open("r", encoding="utf8") as infile:
         try:
             data: str = infile.read()
 
@@ -123,7 +123,7 @@ def _read_text_from_file(path: Path) -> str | None:
 
 def _write_text_to_file(path: Path, data: str) -> None:
     """Write text data to a file."""
-    with path.open("w") as outfile:
+    with path.open("w", encoding="utf8") as outfile:
         outfile.write(data)
 
     return None
@@ -131,7 +131,7 @@ def _write_text_to_file(path: Path, data: str) -> None:
 
 def _read_yaml_from_file(path: Path) -> YAMLType | None:
     """Read YAML data from a file and return it, or None on decode error."""
-    with path.open("r") as infile:
+    with path.open("r", encoding="utf8") as infile:
         try:
             data = yaml.safe_load(infile)
 
@@ -146,7 +146,7 @@ def _read_yaml_from_file(path: Path) -> YAMLType | None:
 
 def _write_yaml_to_file(path: Path, data: YAMLType) -> None:
     """Write YAML data to a file."""
-    with path.open("w") as outfile:
+    with path.open("w", encoding="utf8") as outfile:
         yaml.dump(data, outfile, default_flow_style=False, indent=2)
 
     return None
